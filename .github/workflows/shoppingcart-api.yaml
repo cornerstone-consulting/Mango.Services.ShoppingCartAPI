@@ -50,7 +50,7 @@ jobs:
             --password ${{ secrets.GITHUB_TOKEN }} \
             --store-password-in-clear-text \
             --name mango-github \
-            "https://nuget.pkg.github.com/MdKasimS-CCG/index.json"
+            "https://nuget.pkg.github.com/cornerstone-consulting/index.json"
 
       # Restore NuGet dependencies
       - name: Restore dependencies
@@ -79,7 +79,7 @@ jobs:
           docker buildx build \
             --secret id=nugetconfig,src="$HOME/.nuget/NuGet/NuGet.Config" \
             --file Dockerfile \
-            --tag ghcr.io/mdkasims-ccg/mango-services-shoppingcartapi:${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.sha }} \
+            --tag ghcr.io/cornerstone-consulting/mango-services-shoppingcartapi:${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.sha }} \
             --load \
             --cache-from type=gha \
             --cache-to type=gha,mode=max \
@@ -99,4 +99,4 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' 
         run: |
           docker push \
-            ghcr.io/mdkasims-ccg/mango-services-shoppingcartapi:${{ github.sha }}
+            ghcr.io/cornerstone-consulting/mango-services-shoppingcartapi:${{ github.sha }}
